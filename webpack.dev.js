@@ -32,9 +32,9 @@ module.exports = {
         ]
     },
     resolve: {
-      extensions: [ '.tsx', '.ts', '.js' ],
+        extensions: ['.tsx', '.ts', '.js'],
     },
-    output:{
+    output: {
         path: path.resolve(__dirname, 'dist', 'dev'),
     },
     plugins: [
