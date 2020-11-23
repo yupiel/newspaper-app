@@ -1,7 +1,7 @@
 import { Article } from '../../domain/Article'
-import { APIServices } from '../../infrastructure/orm/APIServices'
+import { APIService } from '../../infrastructure/orm/APIService'
 
-export default async function execute(apiServices: APIServices, query: string, offset: number = 0) : Promise<Array<Article>>{
-    return await apiServices.queryNextTenArticles(query, offset);
+export default async function execute(apiServices: APIService, query: string, amount: number = 10, offset: number = 0) : Promise<Array<Article>>{
+    return await apiServices.queryNextArticles(query, amount, offset);
 };
 

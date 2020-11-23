@@ -2,7 +2,7 @@ export class APIAuthService {
     private _user: string;
     private _password: string;
 
-    private _baseURL: string = 'https://sandbox-api.ipool.asideas.de/sandbox/api/';
+    private _baseURL: string = 'https://sandbox-api.ipool.asideas.de/sandbox/api';
 
     public authorized: boolean;
     public get credentials(){
@@ -17,7 +17,7 @@ export class APIAuthService {
         let headers = new Headers();
         headers.set('Authorization', 'Basic ' + btoa(user + ":" + password));
 
-        return await fetch(`${this._baseURL}statistics`, {
+        return await fetch(`${this._baseURL}/statistics`, {
             method: 'GET',
             headers: headers
         })
