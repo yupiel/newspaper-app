@@ -1,7 +1,7 @@
 export class Article{
     private _id: string;
     private _language: string;
-    private _dateIssued: Date;
+    private _dateIssued: string;
     private _url: string;
     private _content: string;
     private _title: string;
@@ -26,13 +26,19 @@ export class Article{
     }
 
     public get dateIssuedYear(){
-        return this._dateIssued.getFullYear().toString();
+        return this._dateIssued.split('T')[0].split('-')[0];
     }
     public get dateIssuedMonth(){
-        return this._dateIssued.getMonth().toString();
+        return this._dateIssued.split('T')[0].split('-')[1];
     }
     public get dateIssuedDay(){
-        return this._dateIssued.getDay().toString();
+        return this._dateIssued.split('T')[0].split('-')[2];
+    }
+    public get dateIssuedHour(){
+        return this._dateIssued.split('T')[1].split(':')[0];
+    }
+    public get dateIssuedMinute(){
+        return this._dateIssued.split('T')[1].split(':')[1];
     }
 
     public get url(){
@@ -55,7 +61,7 @@ export class Article{
 export interface InternalArticleJSON {
     id: string;
     language: string;
-    dateIssued: Date;
+    dateIssued: string;
     url: string;
     content: string;
     title: string;
