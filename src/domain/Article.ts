@@ -7,10 +7,10 @@ export class Article{
     private _title: string;
     private _pictureReferences: PictureReference[];
 
-    constructor(articleJSON: ArticleJSON){
+    constructor(articleJSON: InternalArticleJSON){
         this._id = articleJSON.id;
         this._language = articleJSON.language;
-        this._dateIssued = new Date(Date.parse(articleJSON.dateIssued));
+        this._dateIssued = articleJSON.dateIssued;
         this._url = articleJSON.url;
         this._content = articleJSON.content;
         this._title = articleJSON.title;
@@ -52,10 +52,10 @@ export class Article{
     }
 }
 
-export interface ArticleJSON {
+export interface InternalArticleJSON {
     id: string;
     language: string;
-    dateIssued: string;
+    dateIssued: Date;
     url: string;
     content: string;
     title: string;
