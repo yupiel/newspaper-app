@@ -1,20 +1,20 @@
 export class Article{
     private _id: string;
     private _language: string;
-    private _dateIssued: string;
+    private _dateIssued: Date;
     private _url: string;
     private _content: string;
     private _title: string;
-    private _pictureReferences: PictureReference[];
+    private _pictureURL: string;
 
-    constructor(articleJSON: InternalArticleJSON){
-        this._id = articleJSON.id;
-        this._language = articleJSON.language;
-        this._dateIssued = articleJSON.dateIssued;
-        this._url = articleJSON.url;
-        this._content = articleJSON.content;
-        this._title = articleJSON.title;
-        this._pictureReferences = articleJSON.pictureReferences;
+    constructor(id:string, language: string, dateIssued: Date, url :string, content:string, title:string, pictureURL: string){
+        this._id = id;
+        this._language = language;
+        this._dateIssued = dateIssued;
+        this._url = url;
+        this._content = content;
+        this._title = title;
+        this._pictureURL = pictureURL;
     }
 
     public get id(){
@@ -26,19 +26,19 @@ export class Article{
     }
 
     public get dateIssuedYear(){
-        return this._dateIssued.split('T')[0].split('-')[0];
+        return this._dateIssued.getFullYear().toString();
     }
     public get dateIssuedMonth(){
-        return this._dateIssued.split('T')[0].split('-')[1];
+        return this._dateIssued.getMonth().toString();
     }
     public get dateIssuedDay(){
-        return this._dateIssued.split('T')[0].split('-')[2];
+        return this._dateIssued.getDay().toString();
     }
     public get dateIssuedHour(){
-        return this._dateIssued.split('T')[1].split(':')[0];
+        return this._dateIssued.getHours().toString();
     }
     public get dateIssuedMinute(){
-        return this._dateIssued.split('T')[1].split(':')[1];
+        return this._dateIssued.getMinutes().toString();
     }
 
     public get url(){
@@ -54,26 +54,6 @@ export class Article{
     }
 
     public get mainPictureUrl(){
-        return this._pictureReferences[0].originalImage.url;
+        return this._pictureURL;
     }
-}
-
-export interface InternalArticleJSON {
-    id: string;
-    language: string;
-    dateIssued: string;
-    url: string;
-    content: string;
-    title: string;
-    pictureReferences: PictureReference[];
-}
-
-export interface PictureReference {
-    originalImage: OriginalImage;
-}
-
-export interface OriginalImage {
-    url: string;
-    width: number;
-    height: number;
 }

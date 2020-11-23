@@ -1,8 +1,10 @@
 import { APIAuthService } from "./APIAuthService";
-import { Article } from "../../domain/Article"
+import { Article } from "../../domain/Article";
+import { ArticleConverter } from "./ArticleConverter";
 
 export class APIService {
     private _apiAuth: APIAuthService;
+    private _converter: ArticleConverter;
     private _baseURL: string = 'https://sandbox-api.ipool.asideas.de/sandbox/api';
 
     constructor(apiAuthService: APIAuthService) {
@@ -10,6 +12,8 @@ export class APIService {
             this._apiAuth = apiAuthService;
         else
             throw Error('APIAuthService in APIServices constructor was not authorized yet.')
+        
+            this._converter = new ArticleConverter();
     }
 
     public async getNextArticles(amount: number = 10, offset: number = 0): Promise<Array<Article>> {
@@ -25,7 +29,7 @@ export class APIService {
                 let resultJSON = await res.json();
 
                 for(let index = 0; index < amount; index++){
-                    result.push(new Article(resultJSON['documents'][index]));
+                    result.push(this._converter.convertJSONToArticle(resultJSON['documents'][index]));
                 }
 
                 return result;
@@ -49,7 +53,7 @@ export class APIService {
                 let resultJSON = await res.json();
 
                 for(let index = 0; index < amount; index++){
-                    result.push(new Article(resultJSON['documents'][index]));
+                    result.push(this._converter.convertJSONToArticle(resultJSON['documents'][index]));
                 }
 
                 return result;
