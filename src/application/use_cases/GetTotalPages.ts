@@ -4,9 +4,9 @@ export default async function execute(apiServices: APIService, query: string = '
     let totalNumber: number;
 
     if (query)
-        totalNumber = await this._apiService.getTotalAmountOfArticles(query);
+        totalNumber = await apiServices.getTotalAmountOfArticles(query);
     else
-        totalNumber = await this._apiService.getTotalAmountOfArticles();
+        totalNumber = await apiServices.getTotalAmountOfArticles();
 
     return Math.ceil(totalNumber);
 };
