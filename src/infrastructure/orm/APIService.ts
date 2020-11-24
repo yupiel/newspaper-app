@@ -8,12 +8,12 @@ export class APIService {
     private _baseURL: string = 'https://sandbox-api.ipool.asideas.de/sandbox/api';
 
     constructor(apiAuthService: APIAuthService) {
-        if(apiAuthService.authorized)
+        if (apiAuthService.authorized)
             this._apiAuth = apiAuthService;
         else
             throw Error('APIAuthService in APIServices constructor was not authorized yet.')
-        
-            this._converter = new ArticleConverter();
+
+        this._converter = new ArticleConverter();
     }
 
     public async getNextArticles(amount: number = 10, offset: number = 0): Promise<Array<Article>> {
@@ -25,10 +25,10 @@ export class APIService {
             headers: headers
         })
             .then(async res => {
-                let result : Array<Article> = new Array<Article>();
+                let result: Array<Article> = new Array<Article>();
                 let resultJSON = await res.json();
 
-                for(let index = 0; index < amount; index++){
+                for (let index = 0; index < amount; index++) {
                     result.push(this._converter.convertJSONToArticle(resultJSON['documents'][index]));
                 }
 
@@ -49,10 +49,10 @@ export class APIService {
             headers: headers
         })
             .then(async res => {
-                let result : Array<Article> = new Array<Article>();
+                let result: Array<Article> = new Array<Article>();
                 let resultJSON = await res.json();
 
-                for(let index = 0; index < amount; index++){
+                for (let index = 0; index < amount; index++) {
                     result.push(this._converter.convertJSONToArticle(resultJSON['documents'][index]));
                 }
 
@@ -61,6 +61,25 @@ export class APIService {
             .catch(err => {
                 console.error(err);
                 return new Array<Article>();
+            });
+    }
+
+    public async getTotalAmountOfArticles(query: string = ''): Promise<number> {
+        let headers = new Headers();
+        headers.set('Authorization', 'Basic ' + this._apiAuth.credentials);
+
+        return await fetch(`${this._baseURL}/search?q=${query}&types=article&publisher=welt`, {
+            method: 'GET',
+            headers: headers
+        })
+            .then(async res => {
+                let resultJSON = await res.json();
+
+                return resultJSON['pagination']['total'];
+            })
+            .catch(err => {
+                console.error(err);
+                return 0;
             });
     }
 }
