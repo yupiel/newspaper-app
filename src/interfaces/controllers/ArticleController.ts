@@ -28,5 +28,4 @@ export class ArticleController {
         this._lastQuery = query;
         return await QueryNextArticles(this._apiService, query, amount, offset);
     }
-
 }

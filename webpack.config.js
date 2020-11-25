@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     mode: 'production',
@@ -11,18 +12,22 @@ module.exports = {
                 use: [
                     'html-loader'
                 ],
+                exclude: /node_modules/,
             },
             {
                 test: /\.css$/i,
                 use: [
+                    'style-loader',
                     'css-loader'
-                ]
+                ],
+                exclude: /node_modules/,
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
                     'file-loader',
                 ],
+                exclude: /node_modules/,
             },
             {
                 test: /\.tsx?$/,
@@ -38,7 +43,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist', 'dev'),
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './src/index.html' })
+        new HtmlWebpackPlugin({ template: './src/index.html' }),
     ],
     experiments: {
         topLevelAwait: true

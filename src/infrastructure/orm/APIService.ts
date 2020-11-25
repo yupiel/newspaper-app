@@ -24,12 +24,12 @@ export class APIService {
             method: 'GET',
             headers: headers
         })
-            .then(async res => {
+            .then(res => res.json())
+            .then(resJSON => {
                 let result: Array<Article> = new Array<Article>();
-                let resultJSON = await res.json();
 
                 for (let index = 0; index < amount; index++) {
-                    result.push(this._converter.convertJSONToArticle(resultJSON['documents'][index]));
+                    result.push(this._converter.convertJSONToArticle(resJSON['documents'][index]));
                 }
 
                 return result;
@@ -48,12 +48,12 @@ export class APIService {
             method: 'GET',
             headers: headers
         })
-            .then(async res => {
+            .then(res => res.json())
+            .then(resJSON => {
                 let result: Array<Article> = new Array<Article>();
-                let resultJSON = await res.json();
 
                 for (let index = 0; index < amount; index++) {
-                    result.push(this._converter.convertJSONToArticle(resultJSON['documents'][index]));
+                    result.push(this._converter.convertJSONToArticle(resJSON['documents'][index]));
                 }
 
                 return result;
@@ -72,11 +72,8 @@ export class APIService {
             method: 'GET',
             headers: headers
         })
-            .then(async res => {
-                let resultJSON = await res.json();
-
-                return resultJSON['pagination']['total'];
-            })
+            .then(res => res.json())
+            .then(resJSON => resJSON['pagination']['total'])
             .catch(err => {
                 console.error(err);
                 return 0;

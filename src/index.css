@@ -1,0 +1,17 @@
+.articlelist__article {
+    border: 3px groove black;
+    padding: 20px 40px 40px;
+    max-width: 600px;
+    display: flex;
+}
+
+.articlelist__articleimage {
+    margin: 20px 30px 0 0;
+    width: 200px;
+    object-fit: contain;
+    align-self: flex-start;
+}
+
+.articlelist__articletext {
+    flex: 1 1 auto;
+}
