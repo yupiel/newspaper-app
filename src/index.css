@@ -3,6 +3,9 @@
     padding: 20px 40px 40px;
     max-width: 600px;
     display: flex;
+    cursor: pointer;
+
+    margin-bottom: 20px;
 }
 
 .articlelist__articleimage {

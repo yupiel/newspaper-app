@@ -23,6 +23,8 @@ export class ArticleSubView {
     private _title: string;
     private _content: string;
 
+    private _articleURL: string;
+
     private _issuedDate: string;
     private _issuedTime: string;
 
@@ -31,10 +33,13 @@ export class ArticleSubView {
         this._title = article.title;
         this._content = this.trimContentToLength(article.content, 100);
 
+        this._articleURL = article.url;
+
         this._issuedDate = `${article.dateIssuedDay}.${article.dateIssuedMonth}.${article.dateIssuedYear}`;
         this._issuedTime = `${article.dateIssuedHour}:${article.dateIssuedMinute}`;
 
         this.populateWithData();
+        this.openArticleClickEvent();
     }
 
     private populateWithData(): void {
@@ -82,5 +87,10 @@ export class ArticleSubView {
 
             return content;
         }
+    }
+    private openArticleClickEvent(): void{
+        $(this._html).on('click', () => {
+            window.location.href = this._articleURL;
+        })
     }
 }
