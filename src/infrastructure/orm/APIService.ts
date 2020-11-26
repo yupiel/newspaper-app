@@ -6,6 +6,7 @@ export class APIService {
     private _apiAuth: APIAuthService;
     private _converter: ArticleConverter;
     private _baseURL: string = 'https://sandbox-api.ipool.asideas.de/sandbox/api';
+    private _baseSearchParameters: string = '/search?&types=article&publisher=welt&sortBy=LATEST&order=DESC';
 
     constructor(apiAuthService: APIAuthService) {
         if (apiAuthService.authorized)
@@ -20,7 +21,7 @@ export class APIService {
         let headers = new Headers();
         headers.set('Authorization', 'Basic ' + this._apiAuth.credentials);
 
-        return await fetch(`${this._baseURL}/search?&types=article&publisher=welt&offset=${offset}&limit=${amount}`, {
+        return await fetch(`${this._baseURL}${this._baseSearchParameters}&offset=${offset}&limit=${amount}`, {
             method: 'GET',
             headers: headers
         })
@@ -44,7 +45,7 @@ export class APIService {
         let headers = new Headers();
         headers.set('Authorization', 'Basic ' + this._apiAuth.credentials);
 
-        return await fetch(`${this._baseURL}/search?q=${query}&types=article&publisher=welt&offset=${offset}&limit=${amount}`, {
+        return await fetch(`${this._baseURL}${this._baseSearchParameters}&q=${query}&offset=${offset}&limit=${amount}`, {
             method: 'GET',
             headers: headers
         })
@@ -68,7 +69,7 @@ export class APIService {
         let headers = new Headers();
         headers.set('Authorization', 'Basic ' + this._apiAuth.credentials);
 
-        return await fetch(`${this._baseURL}/search?q=${query}&types=article&publisher=welt`, {
+        return await fetch(`${this._baseURL}${this._baseSearchParameters}q=${query}`, {
             method: 'GET',
             headers: headers
         })
