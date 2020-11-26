@@ -28,7 +28,7 @@ export class APIService {
             .then(resJSON => {
                 let result: Array<Article> = new Array<Article>();
 
-                for (let index = 0; index < amount; index++) {
+                for (let index = 0; index < Object.keys(resJSON['documents']).length; index++) {
                     result.push(this._converter.convertJSONToArticle(resJSON['documents'][index]));
                 }
 
@@ -52,7 +52,7 @@ export class APIService {
             .then(resJSON => {
                 let result: Array<Article> = new Array<Article>();
 
-                for (let index = 0; index < amount; index++) {
+                for (let index = 0; index < Object.keys(resJSON['documents']).length; index++) {
                     result.push(this._converter.convertJSONToArticle(resJSON['documents'][index]));
                 }
 

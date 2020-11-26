@@ -9,13 +9,15 @@ export class ListView {
     private _controller: ArticleController;
 
     private _navbar: JQuery<HTMLElement>;
+    private _currentQuery: string = '';
 
+    private _articlelist: JQuery<HTMLElement>;
     private _articles: Array<ArticleSubView>;
     private _articlesPerPage: number = 10;
 
-    private _pagination: JQuery<HTMLElement>;
     private _currentPage: number = 1;
-    private _totalPages: number;
+    private _currentScrollHeight: number = 0;
+    private _pageBottomScrollOffset: number = 300;
 
     private get currentOffset(): number {
         return (this._currentPage * this._articlesPerPage) - this._articlesPerPage;
@@ -25,28 +27,41 @@ export class ListView {
         this._controller = articleController;
 
         this._navbar = $('.navbar');
+        this._articlelist = $('.articlelist');
         this._articles = new Array<ArticleSubView>();
-        this._pagination = $('.pagination');
+
+        this.addInfiniteScrollingEvent();
     }
 
-    public async initialize(): Promise<void> {
-        let retrievedArticles: Array<Article> = await this._controller.getNextArticles(this._articlesPerPage, this.currentOffset);
-        this._totalPages = await this._controller.calculateTotalPages();
+    public updateArticlesBasedOnPage(query: string = ''): void {
+        let retrievedArticles: Promise<Array<Article>>;
 
-        for (let index = 0; index < retrievedArticles.length; index++) {
-            this._articles.push(new ArticleSubView(retrievedArticles[index]));
-            this.addArticleToHTMLList(this._articles[index]);
-        }
+        if (!query)
+            retrievedArticles = this._controller.getNextArticles(this._articlesPerPage, this.currentOffset);
+        else
+            retrievedArticles = this._controller.queryNextArticles(query, this._articlesPerPage, this.currentOffset);
 
-        return Promise.resolve();
+        retrievedArticles.then((articles: Array<Article>) => {
+            for (let index = 0; index < articles.length; index++) {
+                this._articles.push(new ArticleSubView(articles[index]));
+                this._articlelist.append(this._articles[this.currentOffset + index].htmlElement);
+            }
+        })
+
     }
 
-    private async updatePagination(): Promise<void> {
-        //TODO
-    }
+    private addInfiniteScrollingEvent(): void {
+        $(window).on('scroll', () => {
+            const scrollHeight: number = $(document).height();
+            const scrollPos: number = Math.floor($(window).height() + $(window).scrollTop());
+            const isBottom: boolean = scrollHeight - this._pageBottomScrollOffset < scrollPos;
 
-    //Helper Methods
-    private addArticleToHTMLList(article: ArticleSubView): void {
-        $('.articlelist').append(article.htmlElement);
+            if (isBottom && this._currentScrollHeight < scrollHeight) {
+                this._currentPage++;
+                this.updateArticlesBasedOnPage(this._currentQuery);
+
+                this._currentScrollHeight = scrollHeight;
+            }
+        });
     }
 }
