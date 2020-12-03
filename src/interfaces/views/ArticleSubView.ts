@@ -6,7 +6,7 @@ export class ArticleSubView {
     private _html: JQuery<HTMLElement> =
         $(`
         <div class='articlelist__article'>
-            <img class='articlelist__articleimage'>
+            <img class='articlelist__articleimage' src="" alt="">
             <div class='articlelist__articletext'>
                 <h2 class='articlelist__articletitle'></h2>
                 <p class='articlelist__articlecontent'></p>
@@ -31,7 +31,7 @@ export class ArticleSubView {
     constructor(article: Article) {
         this._imageURL = article.mainPictureUrl;
         this._title = article.title;
-        this._content = this.trimContentToLength(article.content, 100);
+        this._content = ArticleSubView.trimContentToLength(article.content, 100);
 
         this._articleURL = article.url;
 
@@ -48,7 +48,7 @@ export class ArticleSubView {
         $(this._html).children('.articlelist__articletext').children('.articlelist__articlecontent').html(this._content);
     }
 
-    private trimContentToLength(content: string, maxCharacters: number = 100): string {
+    private static trimContentToLength(content: string, maxCharacters: number = 100): string {
         if (content === undefined) return '';
 
         try {
@@ -88,6 +88,7 @@ export class ArticleSubView {
             return content;
         }
     }
+
     private openArticleClickEvent(): void{
         $(this._html).on('click', () => {
             window.location.href = this._articleURL;

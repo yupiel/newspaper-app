@@ -2,10 +2,10 @@
   "name": "newspaper-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/yupiel/newspaper-app#readme",
   "devDependencies": {
+    "@types/jest": "^26.0.16",
     "@types/jquery": "^3.5.4",
     "css-loader": "^5.0.1",
     "file-loader": "^6.2.0",
@@ -26,6 +27,7 @@
     "jest": "^26.6.3",
     "path": "^0.12.7",
     "style-loader": "^2.0.0",
+    "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.11",
     "typescript": "^4.0.5",
     "webpack": "^5.5.1",

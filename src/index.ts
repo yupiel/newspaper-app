@@ -1,5 +1,5 @@
 //Webpack Imports
-const css = require('./index.css');
+import './index.css';
 
 //Module imports
 import { APIAuthService } from "./infrastructure/orm/APIAuthService";
