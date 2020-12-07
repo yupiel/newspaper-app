@@ -36,9 +36,8 @@ export class ArticleSubView {
 
         this._articleURL = article.url;
 
-        let articleDate: string[] = article.dateIssued.toLocaleString(this._currentLocale).split(', ');
-        this._issuedDate = articleDate[0];
-        this._issuedTime = articleDate[1].slice(0, -3); //Remove seconds with slice
+        this._issuedDate = new Intl.DateTimeFormat(this._currentLocale, {day: 'numeric', month: 'numeric', year: 'numeric'}).format(article.dateIssued);
+        this._issuedTime = new Intl.DateTimeFormat(this._currentLocale, {hour: 'numeric', minute: 'numeric'}).format(article.dateIssued);
 
         this.populateWithData();
         this.openArticleClickEvent();
