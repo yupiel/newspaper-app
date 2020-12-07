@@ -25,20 +25,8 @@ export class Article{
         return this._language;
     }
 
-    public get dateIssuedYear(){
-        return this._dateIssued.getFullYear().toString();
-    }
-    public get dateIssuedMonth(){
-        return this._dateIssued.getMonth().toString();
-    }
-    public get dateIssuedDay(){
-        return this._dateIssued.getDay().toString();
-    }
-    public get dateIssuedHour(){
-        return this._dateIssued.getHours().toString();
-    }
-    public get dateIssuedMinute(){
-        return this._dateIssued.getMinutes().toString();
+    public get dateIssued(){
+        return this._dateIssued;
     }
 
     public get url(){

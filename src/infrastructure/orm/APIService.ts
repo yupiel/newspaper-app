@@ -17,35 +17,11 @@ export class APIService {
         this._converter = new ArticleConverter();
     }
 
-    public async getNextArticles(amount: number = 10, offset: number = 0): Promise<Array<Article>> {
+    public async getArticles(amount: number = 10, offset: number = 0, query: string = ''): Promise<Array<Article>> {
         let headers = new Headers();
         headers.set('Authorization', 'Basic ' + this._apiAuth.credentials);
 
-        return await fetch(`${this._baseURL}${this._baseSearchParameters}&offset=${offset}&limit=${amount}`, {
-            method: 'GET',
-            headers: headers
-        })
-            .then(res => res.json())
-            .then(resJSON => {
-                let result: Array<Article> = new Array<Article>();
-
-                for (let index = 0; index < Object.keys(resJSON['documents']).length; index++) {
-                    result.push(this._converter.convertJSONToArticle(resJSON['documents'][index]));
-                }
-
-                return result;
-            })
-            .catch(err => {
-                console.error(err);
-                return new Array<Article>();
-            });
-    }
-
-    public async queryNextArticles(query: string, amount: number = 10, offset: number = 0): Promise<Array<Article>> {
-        let headers = new Headers();
-        headers.set('Authorization', 'Basic ' + this._apiAuth.credentials);
-
-        return await fetch(`${this._baseURL}${this._baseSearchParameters}&q=${query}&offset=${offset}&limit=${amount}`, {
+        return await fetch(`${this._baseURL}${this._baseSearchParameters}&limit=${amount}&offset=${offset}&q=${query}`, {
             method: 'GET',
             headers: headers
         })

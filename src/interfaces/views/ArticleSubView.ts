@@ -25,6 +25,7 @@ export class ArticleSubView {
 
     private _articleURL: string;
 
+    private _currentLocale: string = 'de-DE';
     private _issuedDate: string;
     private _issuedTime: string;
 
@@ -35,8 +36,9 @@ export class ArticleSubView {
 
         this._articleURL = article.url;
 
-        this._issuedDate = `${article.dateIssuedDay}.${article.dateIssuedMonth}.${article.dateIssuedYear}`;
-        this._issuedTime = `${article.dateIssuedHour}:${article.dateIssuedMinute}`;
+        let articleDate: string[] = article.dateIssued.toLocaleString(this._currentLocale).split(', ');
+        this._issuedDate = articleDate[0];
+        this._issuedTime = articleDate[1].slice(0, -3); //Remove seconds with slice
 
         this.populateWithData();
         this.openArticleClickEvent();
