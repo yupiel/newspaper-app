@@ -25,6 +25,7 @@ export class ArticleSubView {
 
     private _articleURL: string;
 
+    private _currentLocale: string = 'de-DE';
     private _issuedDate: string;
     private _issuedTime: string;
 
@@ -35,8 +36,8 @@ export class ArticleSubView {
 
         this._articleURL = article.url;
 
-        this._issuedDate = `${article.dateIssuedDay}.${article.dateIssuedMonth}.${article.dateIssuedYear}`;
-        this._issuedTime = `${article.dateIssuedHour}:${article.dateIssuedMinute}`;
+        this._issuedDate = new Intl.DateTimeFormat(this._currentLocale, {day: 'numeric', month: 'numeric', year: 'numeric'}).format(article.dateIssued);
+        this._issuedTime = new Intl.DateTimeFormat(this._currentLocale, {hour: 'numeric', minute: 'numeric'}).format(article.dateIssued);
 
         this.populateWithData();
         this.openArticleClickEvent();
