@@ -20,13 +20,13 @@ describe('ArticleSubView', () => {
         expect(ArticleSubView.trimContentToLength(content, limit)).toEqual('')
     })
 
-    test('trimContentToLength returns trimmed content on contiguous content', () => {
+    test('trimContentToLength returns empty on contiguous content', () => {
         let limit = 6
         let content = 'contentisking'
 
         expect(content.length).toBeGreaterThan(limit)
         // @ts-ignore
-        expect(ArticleSubView.trimContentToLength(content, limit)).toEqual('con...')
+        expect(ArticleSubView.trimContentToLength(content, limit)).toEqual('')
     })
 
     test('trimContentToLength returns original content when beneath limit', () => {
