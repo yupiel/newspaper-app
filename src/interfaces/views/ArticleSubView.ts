@@ -14,89 +14,6 @@ export class ArticleSubView {
         </div>
         `);
 
-<<<<<<< Updated upstream
-    get htmlElement(): JQuery<HTMLElement> {
-        return this._html;
-    }
-
-    private _imageURL: string;
-    private _title: string;
-    private _content: string;
-
-    private _articleURL: string;
-
-    private _currentLocale: string = 'de-DE';
-    private _issuedDate: string;
-    private _issuedTime: string;
-
-    constructor(article: Article) {
-        this._imageURL = article.mainPictureUrl;
-        this._title = article.title;
-        this._content = ArticleSubView.trimContentToLength(article.content, 100);
-
-        this._articleURL = article.url;
-
-        this._issuedDate = new Intl.DateTimeFormat(this._currentLocale, {day: 'numeric', month: 'numeric', year: 'numeric'}).format(article.dateIssued);
-        this._issuedTime = new Intl.DateTimeFormat(this._currentLocale, {hour: 'numeric', minute: 'numeric'}).format(article.dateIssued);
-
-        this.populateWithData();
-        this.openArticleClickEvent();
-    }
-
-    private populateWithData(): void {
-        $(this._html).children('.articlelist__articleimage').attr('src', this._imageURL);
-        $(this._html).children('.articlelist__articletext').children('.articlelist__articletitle').html(this._title);
-        $(this._html).children('.articlelist__articletext').children('.articlelist__articlecontent').html(this._content);
-    }
-
-    private static trimContentToLength(content: string, maxCharacters: number = 100): string {
-        if (content === undefined) return '';
-
-        try {
-            console.log(content);
-            console.log(`Content length: ${content.length}`)
-
-            let teaser: string = '';
-
-            if (content.length > maxCharacters - 3) {
-                let contentWords: Array<string> = content.split(' ');
-
-                while (teaser.length < maxCharacters - 3) {
-                    let currentWord = contentWords.shift();
-
-                    if (teaser.length + currentWord.length < maxCharacters - 3) {
-                        teaser += currentWord + ' ';
-                    }
-                    else {
-                        break;
-                    }
-                }
-            }
-            else {
-                teaser = content;
-            }
-
-            if (teaser.endsWith('.'))
-                teaser += '..';
-            else
-                teaser += '...';
-
-            return teaser;
-        }
-        catch (e) {
-            console.error(e);
-
-            return content;
-        }
-    }
-
-    private openArticleClickEvent(): void{
-        $(this._html).on('click', () => {
-            window.location.href = this._articleURL;
-        })
-    }
-}
-=======
 	get htmlElement(): JQuery<HTMLElement> {
 		return this._html;
 	}
@@ -107,6 +24,7 @@ export class ArticleSubView {
 
 	private _articleURL: string;
 
+	private _currentLocale: string = 'de-DE';
 	private _issuedDate: string;
 	private _issuedTime: string;
 
@@ -120,8 +38,15 @@ export class ArticleSubView {
 
 		this._articleURL = article.url;
 
-		this._issuedDate = `${article.dateIssuedDay}.${article.dateIssuedMonth}.${article.dateIssuedYear}`;
-		this._issuedTime = `${article.dateIssuedHour}:${article.dateIssuedMinute}`;
+		this._issuedDate = new Intl.DateTimeFormat(this._currentLocale, {
+			day: 'numeric',
+			month: 'numeric',
+			year: 'numeric',
+		}).format(article.dateIssued);
+		this._issuedTime = new Intl.DateTimeFormat(this._currentLocale, {
+			hour: 'numeric',
+			minute: 'numeric',
+		}).format(article.dateIssued);
 
 		this.populateWithData();
 		this.openArticleClickEvent();
@@ -145,10 +70,7 @@ export class ArticleSubView {
 		content: string,
 		maxCharacters: number = 100
 	): string {
-		if (!content) return '';
-
-		let teaserEndingOffset: number = 3;
-		let contentTrimmed: boolean = false;
+		if (content === undefined) return '';
 
 		try {
 			console.log(content);
@@ -156,20 +78,18 @@ export class ArticleSubView {
 
 			let teaser: string = '';
 
-			if (content.length > maxCharacters - teaserEndingOffset) {
+			if (content.length > maxCharacters - 3) {
 				let contentWords: Array<string> = content.split(' ');
-				if (contentWords.length <= 1) return '';
 
-				while (teaser.length < maxCharacters - teaserEndingOffset) {
+				while (teaser.length < maxCharacters - 3) {
 					let currentWord = contentWords.shift();
 
 					if (
 						teaser.length + currentWord.length <
-						maxCharacters - teaserEndingOffset
+						maxCharacters - 3
 					) {
 						teaser += currentWord + ' ';
 					} else {
-						contentTrimmed = true;
 						break;
 					}
 				}
@@ -177,13 +97,12 @@ export class ArticleSubView {
 				teaser = content;
 			}
 
-			if (contentTrimmed)
-				if (teaser.endsWith('.')) teaser += '..';
-				else teaser += '...';
+			if (teaser.endsWith('.')) teaser += '..';
+			else teaser += '...';
 
 			return teaser;
-		} catch (err) {
-			console.error(err);
+		} catch (e) {
+			console.error(e);
 
 			return content;
 		}
@@ -195,4 +114,3 @@ export class ArticleSubView {
 		});
 	}
 }
->>>>>>> Stashed changes
