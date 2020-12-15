@@ -70,19 +70,20 @@ export class ArticleSubView {
 		content: string,
 		maxCharacters: number = 100
 	): string {
-		if (content === undefined) return '';
+		if (!content) return '';
 
 		try {
 			console.log(content);
 			console.log(`Content length: ${content.length}`);
 
 			let teaser: string = '';
+			let teaserSet: boolean = false;
 
 			if (content.length > maxCharacters - 3) {
 				let contentWords: Array<string> = content.split(' ');
 
-				while (teaser.length < maxCharacters - 3) {
-					let currentWord = contentWords.shift();
+				while (true) {
+					let currentWord: string = contentWords.shift()!;
 
 					if (
 						teaser.length + currentWord.length <
@@ -90,6 +91,7 @@ export class ArticleSubView {
 					) {
 						teaser += currentWord + ' ';
 					} else {
+						if (teaser.length != 0) teaserSet = true;
 						break;
 					}
 				}
@@ -97,8 +99,7 @@ export class ArticleSubView {
 				teaser = content;
 			}
 
-			if (teaser.endsWith('.')) teaser += '..';
-			else teaser += '...';
+			if (teaserSet) teaser = this.ellipsizeText(teaser);
 
 			return teaser;
 		} catch (e) {
@@ -112,5 +113,21 @@ export class ArticleSubView {
 		$(this._html).on('click', () => {
 			window.location.href = this._articleURL;
 		});
+	}
+
+	private static ellipsizeText(text: string): string {
+		text = text.trim();
+		let counter = 0;
+
+		for (let index = text.length - 1; index > 0; index--) {
+			if (text[index] == '.') counter++;
+			else break;
+		}
+		if (counter == text.length) return '';
+
+		text = text.substring(0, text.length - counter);
+		text += ' ...';
+
+		return text;
 	}
 }

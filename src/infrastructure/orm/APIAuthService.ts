@@ -26,7 +26,8 @@ export class APIAuthService {
             headers: { Authorization: `Basic ${btoa(`${user}:${password}`)}` },
         })
             .then((res) => {
-                if (res.ok || res.status === 200) {
+                console.log(res)
+                if (res.ok || res.status == 200) {
                     this._user = btoa(user);
                     this._password = btoa(password);
                     this.authorized = true;

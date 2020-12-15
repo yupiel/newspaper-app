@@ -3,7 +3,6 @@ import { Article } from '../../domain/Article';
 
 import GetNextArticles from '../../application/use_cases/GetNextArticles';
 import QueryNextArticles from '../../application/use_cases/QueryNextArticles';
-import GetTotalPages from '../../application/use_cases/GetTotalPages';
 
 export class ArticleController {
     private _apiService: APIService;
@@ -14,10 +13,6 @@ export class ArticleController {
         this._apiService = apiService;
 
         this._lastQuery = '';
-    }
-
-    public async calculateTotalPages(): Promise<number> {
-        return await GetTotalPages(this._apiService, this._lastQuery);
     }
 
     public async getNextArticles(amount: number, offset: number = 0): Promise<Array<Article>> {
