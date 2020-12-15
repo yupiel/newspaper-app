@@ -4,9 +4,9 @@
  */
 
 module.exports = {
-  clearMocks: true,
-  preset: "ts-jest",
-  transform: {
-    '^.+\\.test.ts?$': 'ts-jest'
-  }
+	clearMocks: true,
+	preset: 'ts-jest',
+	transform: {
+		'^.+\\.test.ts?$': 'ts-jest',
+	},
 };

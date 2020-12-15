@@ -70,7 +70,7 @@ export class ArticleSubView {
 		content: string,
 		maxCharacters: number = 100
 	): string {
-		if (!content) return '';
+		if (!content || !maxCharacters) return '';
 
 		try {
 			console.log(content);
