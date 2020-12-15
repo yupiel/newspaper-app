@@ -1,6 +1,5 @@
 import { APIAuthService } from './APIAuthService';
 import { APIService } from './APIService';
-import { Article } from '../../domain/Article';
 jest.mock('./APIAuthService');
 
 describe('APIService', () => {
