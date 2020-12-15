@@ -1,31 +1,35 @@
 export class APIAuthService {
-    private _user: string;
-    private _password: string;
+    private _user: string = '';
+    private _password: string = '';
 
-    private _baseURL: string = 'https://sandbox-api.ipool.asideas.de/sandbox/api';
+    private _baseURL: string =
+        'https://sandbox-api.ipool.asideas.de/sandbox/api';
 
-    public authorized: boolean;
-    public get credentials(){
-        return btoa(atob(this._user) + ":" + atob(this._password));
+    public authorized: boolean = false;
+
+    public get credentials() : string {
+        if(!this._user || !this._password)
+            return ''
+        else
+            return btoa(atob(this._user) + ':' + atob(this._password));
     }
 
     constructor() {
         this.authorized = false;
     }
 
-    public async credentialsValid(user: string, password: string): Promise<boolean> {
-        let headers = new Headers();
-        headers.set('Authorization', 'Basic ' + btoa(user + ":" + password));
-
+    public async credentialsValid(
+        user: string,
+        password: string
+    ): Promise<boolean> {
         return await fetch(`${this._baseURL}/statistics`, {
-            method: 'GET',
-            headers: headers
+            headers: { Authorization: `Basic ${btoa(`${user}:${password}`)}` },
         })
-            .then(res => {
-                if (res.status == 200){
+            .then((res) => {
+                console.log(res)
+                if (res.ok || res.status == 200) {
                     this._user = btoa(user);
                     this._password = btoa(password);
-
                     this.authorized = true;
 
                     return true;
@@ -33,7 +37,7 @@ export class APIAuthService {
                 this.authorized = false;
                 return false;
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err);
                 this.authorized = false;
                 return false;
