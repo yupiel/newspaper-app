@@ -1,6 +1,6 @@
 import { APIAuthService } from './APIAuthService';
 import { Article } from '../../domain/Article';
-import { ArticleConverter } from './ArticleConverter';
+import { ArticleConverter } from '../../utility/ArticleConverter';
 
 export class APIService {
 	private _apiAuth: APIAuthService;

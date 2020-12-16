@@ -1,4 +1,4 @@
-import { APIService } from '../../infrastructure/orm/APIService';
+import { APIService } from '../../infrastructure/api/APIService';
 import { Article } from '../../domain/Article';
 
 import GetNextArticles from '../../application/use_cases/GetNextArticles';

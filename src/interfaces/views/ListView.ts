@@ -7,7 +7,6 @@ import { ArticleSubView } from './ArticleSubView';
 export class ListView {
 	private _controller: ArticleController;
 
-	private _navbar: JQuery<HTMLElement>;
 	private _currentQuery: string = '';
 
 	private _articlelist: JQuery<HTMLElement>;
@@ -25,9 +24,9 @@ export class ListView {
 	}
 
 	constructor(articleController: ArticleController) {
+		//$('body').append('<div class="articlelist"></div>');
 		this._controller = articleController;
 
-		this._navbar = $('.navbar');
 		this._articlelist = $('.articlelist');
 		this._articles = new Array<ArticleSubView>();
 

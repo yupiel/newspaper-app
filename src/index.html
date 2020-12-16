@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Newspaper App</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <title>Newspaper App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-</head>
+	<body>
+        <div class="navbar"></div>
+		<div class="login">
+            <h1 class="login__logintitle">Login with your API credentials</h1>
+            <p class="login__notice"></p>
+			<span class="login__usernamelabel"><b>Username</b></span>
+			<input
+				type="text"
+				placeholder="Enter Username"
+                class="login__usernameinput"
+				required
+			/>
+			<span class="login__passwordlabel"><b>Password</b></span>
+			<input
+				type="password"
+				placeholder="Enter Password"
+                class="login__passwordinput"
+				required
+			/>
 
-<body>
-    <div class='navbar'></div>
-    <div class='articlelist'></div>
-</body>
-
+			<button class="login__submitbutton">Login</button>
+        </div>
+        <div class="articlelist"></div>
+	</body>
 </html>
