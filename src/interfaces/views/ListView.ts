@@ -24,7 +24,6 @@ export class ListView {
 	}
 
 	constructor(articleController: ArticleController) {
-		//$('body').append('<div class="articlelist"></div>');
 		this._controller = articleController;
 
 		this._articlelist = $('.articlelist');
@@ -36,17 +35,20 @@ export class ListView {
 	public updateArticlesBasedOnPage(query: string = ''): void {
 		let retrievedArticles: Promise<Array<Article>>;
 
-		if (!query)
+		if (!query) {
 			retrievedArticles = this._controller.getNextArticles(
 				this._articlesPerPage,
 				this.currentOffset
 			);
-		else
+		} else {
 			retrievedArticles = this._controller.queryNextArticles(
 				query,
 				this._articlesPerPage,
 				this.currentOffset
 			);
+
+			this._currentQuery = query;
+		}
 
 		retrievedArticles.then((articles: Array<Article>) => {
 			for (let index = 0; index < articles.length; index++) {
@@ -74,5 +76,12 @@ export class ListView {
 				this._currentScrollHeight = scrollHeight;
 			}
 		});
+	}
+
+	public resetListView(): void {
+		this._articles.splice(0, this._articles.length);
+		$(this._articlelist).empty();
+		this._currentPage = 1;
+		this._currentScrollHeight = 0;
 	}
 }

@@ -1,6 +1,25 @@
 @media only screen and (max-width: 600px) {
-    /* Lower Resolution Screens only START*/
-    .login {
+	/* Lower Resolution Screens only START*/
+	.searchbar {
+		height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.searchbar__searchinput{
+		height: 25px;
+	}
+	.searchbar__searchbutton {
+		cursor: pointer;
+		height: 25px;
+		width: 25px;
+		margin-left: 10px;
+		background: url(./img/searchbutton_icon.svg) no-repeat;
+		background-size: cover;
+	}
+
+	.login {
 		display: flex;
 		flex-direction: column;
 		font-family: 'Open Sans', sans-serif;
@@ -40,6 +59,25 @@
 
 @media only screen and (min-width: 601px) {
 	/* Higher Resolution Screens only START*/
+	.searchbar {
+		height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+	.searchbar__searchinput{
+		height: 25px;
+	}
+	.searchbar__searchbutton {
+		cursor: pointer;
+		height: 25px;
+		width: 25px;
+		margin-left: 10px;
+		background: url(./img/searchbutton_icon.svg) no-repeat;
+		background-size: cover;
+	}
+
 	.login {
 		display: flex;
 		flex-direction: column;

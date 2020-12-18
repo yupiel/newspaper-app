@@ -44,9 +44,6 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({ template: './src/index.html' }),
     ],
-    experiments: {
-        topLevelAwait: true
-    },
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         port: 9000

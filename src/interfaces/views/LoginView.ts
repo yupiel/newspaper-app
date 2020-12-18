@@ -1,42 +1,56 @@
 import $ from 'jquery';
-import { APIAuthService } from "../../infrastructure/api/APIAuthService";
+import { APIAuthService } from '../../infrastructure/api/APIAuthService';
 
-export class LoginView{
-    private _login: JQuery<HTMLElement>;
+export class LoginView {
+	private _login: JQuery<HTMLElement>;
 
-    private _apiAuthService: APIAuthService;
-    public get apiAuthService(): APIAuthService{
-        if(this._apiAuthService.authorized)
-            return this._apiAuthService;
+	private _apiAuthService: APIAuthService;
+	public get apiAuthService(): APIAuthService {
+		if (this._apiAuthService.authorized) return this._apiAuthService;
 
-        throw Error('Tried to get API Auth service before it was passed to LoginView');
-    }
-    
-    constructor(apiAuthService: APIAuthService){
-        this._login = $('.login');
+		throw Error(
+			'Tried to get API Auth service before it was passed to LoginView'
+		);
+	}
 
-        this._apiAuthService = apiAuthService;
+	constructor(apiAuthService: APIAuthService) {
+		this._login = $('.login');
 
-        $(document).on('click', '.login__submitbutton', async () => this.loginEventHandler());
-    }
+		this._apiAuthService = apiAuthService;
 
-    private async loginEventHandler(){
-        let result = await this._apiAuthService.credentialsValid($('.login__usernameinput').val() as string, $('.login__passwordinput').val() as string);
+		$(document).on('click', '.login__submitbutton', async () =>
+			this.loginEventHandler()
+		);
+		$(document).on('keyup', '.login', (event) => this.loginOnKeyUp(event, 'Enter'));
+	}
 
-        if(result){
-            this.loginSuccessSelfDestruction();
-            $(document).trigger('loginSuccessEvent');
-        }
-        else{
-            console.error('Login was not successful. Incorrect credentials.');
-            $('.login__notice').html('Credentials incorrect. Try again.');
+	private async loginEventHandler() {
+		let result = await this._apiAuthService.credentialsValid(
+			$('.login__usernameinput').val() as string,
+			$('.login__passwordinput').val() as string
+		);
 
-            $('.login__usernameinput').val('');
-            $('.login__passwordinput').val('');
-        }
-    }
+		if (result) {
+			this.loginSuccessSelfDestruction();
+			$(document).trigger('loginSuccessEvent');
+		} else {
+			console.error('Login was not successful. Incorrect credentials.');
+			$('.login__notice').html('Credentials incorrect. Try again.');
 
-    private loginSuccessSelfDestruction(): void{
-        $(this._login).remove();
-    }
+			$('.login__usernameinput').val('');
+			$('.login__passwordinput').val('');
+		}
+	}
+
+	private loginOnKeyUp(event: JQuery.KeyUpEvent, key: string){
+		if(event && key){
+			if(event.code == key){
+				this.loginEventHandler();
+			}
+		}
+	}
+
+	private loginSuccessSelfDestruction(): void {
+		$(this._login).remove();
+	}
 }
