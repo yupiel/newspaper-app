@@ -8,8 +8,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build_and_test:
-    name: Build and Test
+  build:
+    name: Build, Test, Docker Push, and Heroku deployment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,13 +31,7 @@ jobs:
       - name: Webpack build
         run: npm run build
         
-  push_to_docker:
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-        
+      # Push to Docker Repository
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.2.1
         with:
@@ -45,14 +39,8 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
           repository: yupiel/newspaper-app
           tag_with_ref: true
-  
-  deploy:
-    name: Deploy to Heroku
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-        
+      
+      # Deploy to Heroku Repository
       - name: Deploy to Heroku
         uses: AkhileshNS/heroku-deploy@v3.6.8
         with:
