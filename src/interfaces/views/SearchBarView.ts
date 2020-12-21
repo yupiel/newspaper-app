@@ -26,7 +26,7 @@ export class SearchBarView {
     private searchButtonHandler(): void {
         let searchContent: string = $('.searchbar__searchinput').val() as string;
 
-        if(searchContent){
+        if(searchContent || searchContent == ''){
             this._listView.resetListView();
             this._listView.updateArticlesBasedOnPage(searchContent);
         }

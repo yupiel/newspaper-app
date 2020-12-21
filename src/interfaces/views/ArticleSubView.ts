@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 import { Article } from '../../domain/Article';
+import { TextUtility } from '../../utility/TextUtility';
 
 export class ArticleSubView {
 	private _html: JQuery<HTMLElement> = $(`
@@ -31,10 +32,7 @@ export class ArticleSubView {
 	constructor(article: Article) {
 		this._imageURL = article.mainPictureUrl;
 		this._title = article.title;
-		this._content = ArticleSubView.trimContentToLength(
-			article.content,
-			100
-		);
+		this._content = TextUtility.trimContentToLength(article.content, 100);
 
 		this._articleURL = article.url;
 
@@ -66,68 +64,9 @@ export class ArticleSubView {
 			.html(this._content);
 	}
 
-	private static trimContentToLength(
-		content: string,
-		maxCharacters: number = 100
-	): string {
-		if (!content || !maxCharacters) return '';
-
-		try {
-			console.log(content);
-			console.log(`Content length: ${content.length}`);
-
-			let teaser: string = '';
-			let teaserSet: boolean = false;
-
-			if (content.length > maxCharacters - 3) {
-				let contentWords: Array<string> = content.split(' ');
-
-				while (true) {
-					let currentWord: string = contentWords.shift()!;
-
-					if (
-						teaser.length + currentWord.length <
-						maxCharacters - 3
-					) {
-						teaser += currentWord + ' ';
-					} else {
-						if (teaser.length != 0) teaserSet = true;
-						break;
-					}
-				}
-			} else {
-				teaser = content;
-			}
-
-			if (teaserSet) teaser = this.ellipsizeText(teaser);
-
-			return teaser;
-		} catch (e) {
-			console.error(e);
-
-			return content;
-		}
-	}
-
 	private openArticleClickEvent(): void {
 		$(this._html).on('click', () => {
 			window.location.href = this._articleURL;
 		});
-	}
-
-	private static ellipsizeText(text: string): string {
-		text = text.trim();
-		let counter = 0;
-
-		for (let index = text.length - 1; index > 0; index--) {
-			if (text[index] == '.') counter++;
-			else break;
-		}
-		if (counter == text.length) return '';
-
-		text = text.substring(0, text.length - counter);
-		text += ' ...';
-
-		return text;
 	}
 }
