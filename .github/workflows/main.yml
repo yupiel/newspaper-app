@@ -46,8 +46,9 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          push: true
+          load: true
           tags: yupiel/newspaper-app
+      - run: docker push yupiel/newspaper-app
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
