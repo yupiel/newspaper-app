@@ -30,13 +30,7 @@ jobs:
       # Webpack build page
       - name: Webpack build
         run: npm run build
-      
-      #Setup Docker Buildx
-      - name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v1.0.4
-        with:
-          version: latest
-      
+        
       #Login to Docker Hub
       - name: Docker Login
         uses: docker/login-action@v1.8.0
@@ -50,8 +44,10 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2.2.1
         with:
+          context: ./
+          file: ./Dockerfile
           push: true
-          tags: yupiel/newspaper-app:latest
+          tags: yupiel/newspaper-app
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
