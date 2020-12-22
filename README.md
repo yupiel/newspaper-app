@@ -24,12 +24,10 @@ Run tests: ```npm run test```
 
 ### Build it yourself
 
-Install dependencies: ```npm install```
-
-Build with webpack ```npm run build```
-
 Create docker container from app's Dockerfile: ```docker build -t yourusername/imagefilename .``` <br>
-Example: ```docker build -t yupiel/newspaper-app .```
+Example: ```docker build -t yupiel/newspaper-app .``` <br>
+
+This will automatically install all the needed dependencies and then package it into a docker image.
 
 ### Download it from the repository
 
