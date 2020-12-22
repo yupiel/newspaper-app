@@ -1,4 +1,4 @@
-FROM node:latest AS build-stage
+FROM node:15.4.0-alpine3.12 AS build-stage
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
