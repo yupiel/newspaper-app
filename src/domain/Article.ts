@@ -6,11 +6,13 @@ export class Article {
 	private _content: string;
 	private _title: string;
 	private _pictureURL: string;
+	private _authors: string[];
 
 	constructor(
 		id: string,
 		language: string,
 		dateIssued: Date,
+		authors: string[],
 		url: string,
 		content: string,
 		title: string,
@@ -23,6 +25,7 @@ export class Article {
 		this._content = content;
 		this._title = title;
 		this._pictureURL = pictureURL;
+		this._authors = authors;
 	}
 
 	public get id() {
@@ -51,5 +54,9 @@ export class Article {
 
 	public get mainPictureUrl() {
 		return this._pictureURL;
+	}
+
+	public get authors(){
+		return this._authors;
 	}
 }

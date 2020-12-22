@@ -54,6 +54,12 @@
 	.articlelist__articlecontent {
 		font-size: small;
 	}
+	.articlelist__articleissued {
+		font-size: small;
+	}
+	.articlelist__articleauthor {
+		font-size: small;
+	}	
 	/* Lower Resolution Screens only END*/
 }
 
@@ -119,5 +125,14 @@
 	.articlelist__articlecontent {
 		font-size: medium;
 	}
+	.articlelist__articleissued {
+		margin-top: 25px;
+		float: left;
+	}
+	.articlelist__articleauthor {
+		margin-top: 25px;
+		margin-left: 20%;
+		float: left;
+	}	
 	/* Higher Resolution Screens only END*/
 }

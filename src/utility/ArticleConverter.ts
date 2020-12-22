@@ -9,6 +9,7 @@ export class ArticleConverter {
             articleJSON.id,
             articleJSON.language,
             new Date(Date.parse(articleJSON.dateIssued)),
+            articleJSON.authors,
             articleJSON.url,
             articleJSON.content,
             articleJSON.title,
@@ -21,6 +22,7 @@ interface InternalArticleJSON {
     id: string;
     language: string;
     dateIssued: string;
+    authors: string[];
     url: string;
     content: string;
     title: string;

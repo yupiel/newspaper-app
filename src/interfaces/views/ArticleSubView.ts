@@ -10,8 +10,9 @@ export class ArticleSubView {
             <div class='articlelist__articletext'>
                 <h2 class='articlelist__articletitle'></h2>
                 <p class='articlelist__articlecontent'></p>
-                <p class='articlelist__releasedateandtime'></p>
-            </div>
+				<p class='articlelist__articleissued'></p>
+				<p class='articlelist__articleauthor'></p>
+			</div>
         </div>
         `);
 
@@ -28,6 +29,7 @@ export class ArticleSubView {
 	private _currentLocale: string = 'de-DE';
 	private _issuedDate: string;
 	private _issuedTime: string;
+	private _authors: string[];
 
 	constructor(article: Article) {
 		this._imageURL = article.mainPictureUrl;
@@ -46,6 +48,8 @@ export class ArticleSubView {
 			minute: 'numeric',
 		}).format(article.dateIssued);
 
+		this._authors = article.authors;
+
 		this.populateWithData();
 		this.openArticleClickEvent();
 	}
@@ -62,6 +66,14 @@ export class ArticleSubView {
 			.children('.articlelist__articletext')
 			.children('.articlelist__articlecontent')
 			.html(this._content);
+		$(this._html)
+			.children('.articlelist__articletext')
+			.children('.articlelist__articleissued')
+			.html(`Issued: ${this._issuedDate}`);
+		$(this._html)
+			.children('.articlelist__articletext')
+			.children('.articlelist__articleauthor')
+			.html(`Author(s): ${this._authors}`);
 	}
 
 	private openArticleClickEvent(): void {
